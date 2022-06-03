@@ -28,6 +28,7 @@ func ShortenURL(c *fiber.Ctx) error { //passing context
 	if err := c.BodyParser(&body); err != nil {
 		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"error": "error cannot parse JSON"})
 	}
+
 	//implement rate limiting
 
 	r2 := database.CreateClient(1)
@@ -48,6 +49,7 @@ func ShortenURL(c *fiber.Ctx) error { //passing context
 	}
 
 	//check if the input is an actual url
+	
 	if !govalidator.IsURL(body.URL) {
 		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"error": "error Invalid URL"})
 
